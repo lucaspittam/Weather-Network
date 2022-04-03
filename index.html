@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <title>Weather Network</title>
+</head>
+<body>
+    <header class="header">
+        <h1>Weather Network</h1>
+    </header>
+    
+    <!-- Bootstrap Grid  -->
+    <div class="container-fluid">
+        <div class = "row">
+            
+     <h3 class="card-header">Search for a City</h3>
+                
+                
+                <!-- Card that holds the search history -->
+                <div class="card">
+                    <div class="card-header">
+                        <h6>Search History</h6>
+                </div>
+
+            </div>
+
+            <!-- Card that holds the current weather -->
+            <div>
+                <div class="card">
+                    <div class="card-body" id="current-stats">
+                        <p>Temperature: <span id="temp"></span></p>
+                        <p>Humidity: <span id="humidity"></span></p>
+                        <p>Wind Speed: <span id="wind"></span></p>
+                        <p>UV Index: <span id="uv"></span><span  class="alert" id="uv-alert"></span></p>
+                    </div>
+                </div>
+                
+                <!-- Card to display the 5-day forecast -->
+                <div ></div>
+                    <div class="card-header">
+                        <h3 class="card-title">5-Day Forecast</h3>
+                    </div>
+
+                    <div class="row card-body" id="forecast-body">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="./assets/js/script.js"></script>
+</body>
+</html>
