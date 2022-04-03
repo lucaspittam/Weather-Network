@@ -234,9 +234,53 @@ var clearHistory = () => {
     searchHistory = [];
     displayHistory();
 }
+// get uv and check errors
+var uvCheck = () => {
+    if (currentWeather.uv === "error") {
+        return;
+    }
 
+    if (currentWeather.uv < 3) {
+        currentWeather.uvAlert = "low";
+        uvAlertEl.textContent = "low";
+        uvAlertEl.classList.add("alert-success");
+        return;
+    }
+    else if (currentWeather.uv < 6) {
+        currentWeather.uvAlert = "moderate";
+        uvAlertEl.textContent = "moderate";
+        uvAlertEl.classList.add("alert-warning");
+        return;
+    }
+    else if (currentWeather.uv < 8) {
+        currentWeather.uvAlert = "high";
+        uvAlertEl.textContent = "high";
+        uvAlertEl.classList.add("alert-danger");
+        return;
+    }
+    else if (currentWeather.uv < 11) {
+        currentWeather.uvAlert = "very high";
+        uvAlertEl.textContent = "very high";
+        uvAlertEl.classList.add("alert-danger");
+        return;
+    }
+    else {
+        currentWeather.uvAlert = "extreme";
+        uvAlertEl.textContent = "extreme";
+        uvAlertEl.classList.add("alert-danger");
+    }
+}
 
+//clear forecast data & empty the forecast array
+var clearForecast = () => {
+    forecast = [];
+    forecastEl.innerHTML = "";
+}
 
-var historyClickHandler = function (event) {
-
+var historyClickHandler = (event) => {
+    var histCity = event.target.textContent;
+    if (histCity) {
+        clearForecast();
+        getWeather(histCity);
+    }
 }
