@@ -200,7 +200,6 @@ var displayHistory = () => {
 
 //get history from local storage
 var loadHistory = () => {
-
 searchHistory = JSON.parse(localStorage.getItem("history"));
 if (!searchHistory) {
     searchHistory = [];
@@ -209,12 +208,33 @@ displayHistory();
 //console.log(oadHistory)
 }
 
-var formSubmitHandle = () => {
+var formSubmitHandle = (event) => {
+
+    event.preventDefault();
+    var searchCity = searchInputEl.value.trim();
+
+    if (searchCity) {
+        getWeather(searchCity);
+        searchHistory.push(searchCity);
+        localStorage.removeItem("history");
+        localStorage.setItem("history", JSON.stringify(searchHistory));
+        clearForecast();
+        displayHistory();
+        searchInputEl.value = "";
+    }
+    else {
+        //catch errors
+        return;
+    }
 
 }
-
-var clearHistory = function() {
+//button press to clear
+var clearHistory = () => {
+    localStorage.removeItem("history");
+    searchHistory = [];
+    displayHistory();
 }
+
 
 
 var historyClickHandler = function (event) {
