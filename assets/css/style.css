@@ -1,6 +1,13 @@
 /* Bootstrap */
+@font-face {
+    font-family: LEMONMILK;
+    src: url(LEMONMILK-Regular.otf);
+} * {
+    font-family: LEMONMILK;
+}
+
 .header {
-    background-color: black;
+    background-color: rgb(198, 198, 198);
     color: white;
     text-align: center;
     height: auto;
@@ -30,8 +37,8 @@
     border-width: thin;
     margin-bottom: 3px;
     border-radius: 10px;
-    border-color: lightslategray;
-    background-color: lightgray;
+    border-color: rgb(188, 190, 193);
+    background-color: rgb(237, 234, 234);
 }
 
 .history-item h4 {
@@ -39,7 +46,7 @@
 }
 
 .form-input {
-    border-color: lightslategray;
+    border-color: rgb(188, 190, 193);
     border-style: solid;
     border-width: thin;
 
@@ -49,11 +56,11 @@
 }
 
 .card-header {
-    background-color: rgb(74, 180, 237);
+    background-color: rgb(168, 210, 233);
 }
 
 .forecast-card {
-    background-color:  rgb(74, 180, 237);
+    background-color:  rgb(168, 210, 233);
 }
 
 #forecast-container {
