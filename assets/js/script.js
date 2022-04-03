@@ -284,3 +284,20 @@ var historyClickHandler = (event) => {
         getWeather(histCity);
     }
 }
+//clear data for results and header of card
+var clearData =  () => {
+    console.log("inside clearData");
+    curStatsEl.style.display = "none";
+    forecastContEl.style.display = "none";
+    curDateEl.innerHTML = "";
+    curIconEl.innerHTML = "";
+}
+
+
+loadHistory();
+//console.log(loadHistory);
+
+//event listener 
+formEl.addEventListener("submit", formSubmitHandler);
+clearBtnEl.addEventListener("click", clearHistory);
+historyEl.addEventListener("click", historyClickHandler);
