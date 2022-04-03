@@ -185,14 +185,28 @@ var displayWeather = () => {
 
 }
 
-
-var displayHistory = function() {
-
+// function to show history
+var displayHistory = () => {
+  
+    historyEl.innerHTML = "";
+    for (var i = 0; i<searchHistory.length; i++) {
+        var historyDiv = document.createElement("div");
+        historyDiv.classList.add("history-item");
+        historyDiv.innerHTML = "<h4>"+searchHistory[i]+"</h4>";
+        historyEl.appendChild(historyDiv);
+    }
+  //console.log(displayHistory);
 }
 
+//get history from local storage
+var loadHistory = () => {
 
-var loadHistory = function() {
-
+searchHistory = JSON.parse(localStorage.getItem("history"));
+if (!searchHistory) {
+    searchHistory = [];
+}
+displayHistory();
+//console.log(oadHistory)
 }
 
 var formSubmitHandle = () => {
