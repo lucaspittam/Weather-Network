@@ -1,0 +1,49 @@
+/* Bootstrap */
+
+.header {
+    background-color: black;
+    color: white;
+    text-align: center;
+    height: auto;
+    padding: 15px;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bolder;
+}
+
+.card-header {
+    justify-content: space-between;
+}
+
+.alert {
+    margin-left: 25px;
+}
+
+.history-item {
+    border-style: solid;
+    border-width: thin;
+    margin-bottom: 3px;
+    border-radius: 10px;
+    border-color: lightslategray;
+    background-color: lightgray;
+}
+
+.form-input {
+    border-color: lightslategray;
+    border-style: solid;
+    border-width: thin;
+
+}
+.form-input:focus {
+    outline: none
+}
+
+.card-header {
+    background-color: rgb(74, 180, 237);
+}
+
+.forecast-card {
+    background-color:  rgb(74, 180, 237);
+}
