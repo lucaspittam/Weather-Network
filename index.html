@@ -19,10 +19,10 @@
         <div class = "row">
             <div class="col-12 col-lg-3">
                 <div class="card">
-                    <h3 class="card-header">Search for a City</h3>
-                    <form id="search-form" class="card-body">
+                    <h3 class="card-header">Pick a City</h3>
+                    <form id="searchFourm" class="card-body">
                         <label class="form-label" for="city"></label>
-                        <input name="city" id="search-city" type="text" autofocus="true" class="form-input" />
+                        <input name="city" id="searchCity" type="text" autofocus="true" class="form-input" />
                         <button type="submit" class="btn btn-primary"><span class="oi oi-magnifying-glass"></span></button>
                     </form>
                 </div>
@@ -31,7 +31,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h6>Search History</h6>
-                        <button class="btn btn-secondary" id="clear-history">Clear</button>
+                        <button class="btn btn-secondary" id="clearHistory">Clear</button>
                     </div>
                     <div class="card-body" id="history"></div>
                 </div>
@@ -39,25 +39,25 @@
             </div>
 
             <!-- Card that holds the current weather -->
-            <div class="col-12 col-lg-9"  id="results-container">
+            <div class="col-12 col-lg-9"  id="resultsContainer">
                 <div class="card">
                     <h3 class="card-header"><span id="name"></span> <span id="date"></span> <span id="icon"></span></h3>
-                    <div class="card-body" id="current-stats">
+                    <div class="card-body" id="currentStats">
                         <p>Temperature: <span id="temp"></span></p>
                         <p>Humidity: <span id="humidity"></span></p>
-                        <p>UV Index: <span id="uv"></span><span  class="alert" id="uv-alert"></span></p>
+                        <p>UV Index: <span id="uv"></span><span  class="alert" id="uvAlert"></span></p>
                         <p>Wind Speed: <span id="wind"></span></p>
                         
                     </div>
                 </div>
                 
                 <!-- Card to display the 5-day forecast -->
-                <div class = "card" id="forecast-container">
+                <div class = "card" id="forecastContainer">
                     <div class="card-header">
                         <h3 class="card-title">5-Day Forecast</h3>
                     </div>
 
-                    <div class="row card-body" id="forecast-body">
+                    <div class="row card-body" id="forecastBody">
                     </div>
                 </div>
 
@@ -65,7 +65,7 @@
         </div>
     </div>
 
-    <!-- I'm also including moment.js to make working with the dates easier -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="./assets/js/script.js"></script>
 </body>

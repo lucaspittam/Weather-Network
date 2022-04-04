@@ -1,9 +1,14 @@
 /* Bootstrap */
+
 @font-face {
     font-family: LEMONMILK;
     src: url(LEMONMILK-Regular.otf);
 } * {
     font-family: LEMONMILK;
+}
+.title {
+    font-size: 24px;
+    font-weight: bolder;
 }
 
 .header {
@@ -12,11 +17,6 @@
     text-align: center;
     height: auto;
     padding: 15px;
-}
-
-.title {
-    font-size: 24px;
-    font-weight: bolder;
 }
 
 .card-header {
@@ -63,10 +63,10 @@
     background-color:  rgb(168, 210, 233);
 }
 
-#forecast-container {
+#forecastContainer {
     display: none;
 }
 
-#current-stats {
+#currentStats {
     display: none;
 }

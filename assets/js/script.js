@@ -1,6 +1,8 @@
+
+//API key
 var apiKey = "4abcc260a6bc7b01032a4489ed2ccdad";
 
-//store weather variables in object
+//current weather  object
 var currentWeather = {
     name: "",
     date: "",
@@ -11,95 +13,90 @@ var currentWeather = {
     uvAlert: "",
     icon: ""
 }
-
-//array
+//arrays
 var forecast = [];
-//array
 var searchHistory = [];
 
-//querySelectors to reference in the sccript.
+//querySelectors to reference
+var curUvEl = document.querySelector("#uv");
+var searchInputEl = document.querySelector("#searchCity");
+var formEl = document.querySelector("#searchFourm");
+var historyEl = document.querySelector("#history");
 var cityNameEl = document.querySelector("#name");
 var curDateEl = document.querySelector("#date");
 var curIconEl = document.querySelector("#icon");
 var curTempEl = document.querySelector("#temp");
 var curHumidityEl = document.querySelector("#humidity");
 var curWindEl = document.querySelector("#wind");
-var curUvEl = document.querySelector("#uv");
-var searchInputEl = document.querySelector("#search-city");
-var formEl = document.querySelector("#search-form");
-var historyEl = document.querySelector("#history");
-var clearBtnEl = document.querySelector("#clear-history");
-var uvAlertEl = document.querySelector("#uv-alert");
-var forecastEl = document.querySelector("#forecast-body");
-var resultsContEl = document.querySelector("#results-container");
-var forecastContEl = document.querySelector("#forecast-container");
-var curStatsEl = document.querySelector("#current-stats");
+var clearBtnEl = document.querySelector("#clearHistory");
+var uvAlertEl = document.querySelector("#uvAlert");
+var forecastEl = document.querySelector("#forecastBody");
+var resultsContEl = document.querySelector("#resultsContainer");
+var forecastContEl = document.querySelector("#forecastContainer");
+var curStatsEl = document.querySelector("#currentStats");
 
-// fatch api
-var getWeather =  (city) => {
 
-    var getWeather = function (city){
+//function tfor API CALL
+var getWeather = (city) => {
 
-        var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&units=imperial&appid=" + apiKey;
-        var lat = "";
-        var lon = "";
-        fetch(apiUrl).then(function(response) {
-            if(response.ok) {
-                response.json().then(function(data) {
-                    //console.log(data);
-                    currentWeather.name = data.name;
-                    currentWeather.date = moment().format("dddd, MMMM Do YYYY");
-                    currentWeather.temp = data.main.temp + " &#176F";
-                    currentWeather.humidity = data.main.humidity+"%";
-                    currentWeather.wind = data.wind.speed + " MPH";
-                    currentWeather.icon = data.weather[0].icon;
-                    lat = data.coord.lat;
-                    lon = data.coord.lon;
-    
-                    var uvUrl = "https://api.openweathermap.org/data/2.5/uvi?appid=" + apiKey + "&lat="+lat+"&lon="+lon;
-                    fetch(uvUrl)
-                    .then(function(uvResponse) {
-                        if (uvResponse.ok) {
-                            uvResponse.json().then(function(uvData) {
-                                currentWeather.uv = uvData.value;
-                                displayWeather();
-                                getForecast(city);
-                            });
-                        }
-                        else {
-                            curUvEl.innerHTML = "Error";
-                            currentWeather.uv = "Error";
-                        }
-                        
-                    });
-    
+    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&units=imperial&appid=" + apiKey;
+    var lat = "";
+    var lon = "";
+    fetch(apiUrl).then(function(response) {
+        if(response.ok) {
+            response.json().then(function(data) {
+                //console.log(data);
+                currentWeather.name = data.name;
+                currentWeather.date = moment().format("dddd, MMMM Do YYYY");
+                currentWeather.temp = data.main.temp + " &#176F";
+                currentWeather.humidity = data.main.humidity+"%";
+                currentWeather.wind = data.wind.speed + " MPH";
+                currentWeather.icon = data.weather[0].icon;
+                lat = data.coord.lat;
+                lon = data.coord.lon;
+
+                var uvUrl = "https://api.openweathermap.org/data/2.5/uvi?appid=" + apiKey + "&lat="+lat+"&lon="+lon;
+                fetch(uvUrl)
+                .then(function(uvResponse) {
+                    if (uvResponse.ok) {
+                        uvResponse.json().then(function(uvData) {
+                            //console.log(uvData);
+                            currentWeather.uv = uvData.value;
+                            displayWeather();
+                            findForecast(city);
+                        });
+                    }
+                    else {
+                        curUvEl.innerHTML = "Error";
+                        currentWeather.uv = "error";
+                    }
+                    
                 });
-            } else {
-                //catch error
-                clearData();
-                cityNameEl.innerHTML = "Error: " + response.status + " " + city + " " + response.statusText;
-    
-    
-            }
-        })
-        .catch (function(error) {
-            cityNameEl.innerHTML = error.message + " Try again later.";
-        })
-    }
 
+            });
+        } else {
+            clearData();
+            cityNameEl.innerHTML = "Error: " + response.status + " " + city + " " + response.statusText;
+        }
+    })
+    .catch (function(error) {
+        cityNameEl.innerHTML = error.message + " Please try again later.";
+    })
 }
 
-var getForecast = (city) =>  {
+//gcity user searched for & makes an api call to get 5day forecast
+
+var findForecast = (city) => {
+
     var forecastUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=" + apiKey;
     fetch(forecastUrl).then(function(response) {
         if (response.ok) {
             response.json().then(function(data) {
-console.log(data);
+                //console.log(data);
 
                 var today = moment().format("YYYY-MM-DD");
                 for (var i=0; i<data.list.length; i++){
                     var dateTime = data.list[i].dt_txt.split(' ');
-
                     if (dateTime[0] !== today && dateTime[1] === "12:00:00" ) {
                         var futureDate = {
                             date: moment(dateTime[0]).format("MM/DD/YYYY"),
@@ -121,10 +118,10 @@ console.log(data);
     .catch (function(error) {
         forecastEl.innerHTML = error.message;
     })
+      //console.log(findForecast);
 }
 
-
-
+//function gets data from  forecast array and creates specific  cards for each day
 var displayForecast =  () => {
     for (var i=0; i<forecast.length; i++) {
         var cardContainerEl = document.createElement("div");
@@ -163,29 +160,23 @@ var displayForecast =  () => {
         forecastEl.appendChild(cardContainerEl);
 
     }
-
-
 }
-// display current weather information collectied by api
+
 var displayWeather = () => {
-
-    var displayWeather = function() {
-        curStatsEl.style.display = "block";
-        forecastContEl.style.display = "block";
-        cityNameEl.innerHTML = currentWeather.name;
-        curDateEl.innerHTML = currentWeather.date;
-        curTempEl.innerHTML = currentWeather.temp;
-        curHumidityEl.innerHTML = currentWeather.humidity;
-        curWindEl.innerHTML = currentWeather.wind;
-        curUvEl.innerHTML = currentWeather.uv;
-        curIconEl.innerHTML = "<img src='https://openweathermap.org/img/wn/" + currentWeather.icon + "@2x.png'></img>";
-        uvCheck();
-    
-    }
+    curStatsEl.style.display = "block";
+    forecastContEl.style.display = "block";
+    cityNameEl.innerHTML = currentWeather.name;
+    curDateEl.innerHTML = currentWeather.date;
+    curTempEl.innerHTML = currentWeather.temp;
+    curHumidityEl.innerHTML = currentWeather.humidity;
+    curWindEl.innerHTML = currentWeather.wind;
+    curUvEl.innerHTML = currentWeather.uv;
+    curIconEl.innerHTML = "<img src='https://openweathermap.org/img/wn/" + currentWeather.icon + "@2x.png'></img>";
+    uvCheck();
 
 }
 
-// function to show history
+//searchHistory array 
 var displayHistory = () => {
   
     historyEl.innerHTML = "";
@@ -195,24 +186,22 @@ var displayHistory = () => {
         historyDiv.innerHTML = "<h4>"+searchHistory[i]+"</h4>";
         historyEl.appendChild(historyDiv);
     }
-  //console.log(displayHistory);
 }
 
-//get history from local storage
+//load search history from localStorage 
 var loadHistory = () => {
-searchHistory = JSON.parse(localStorage.getItem("history"));
-if (!searchHistory) {
-    searchHistory = [];
-}
-displayHistory();
-//console.log(oadHistory)
+    searchHistory = JSON.parse(localStorage.getItem("history"));
+    if (!searchHistory) {
+        searchHistory = [];
+    }
+    displayHistory();
+     //console.log(loadHistory");
 }
 
-var formSubmitHandle = (event) => {
+var formSubmitHandler = (event) => {
 
     event.preventDefault();
     var searchCity = searchInputEl.value.trim();
-
     if (searchCity) {
         getWeather(searchCity);
         searchHistory.push(searchCity);
@@ -223,18 +212,11 @@ var formSubmitHandle = (event) => {
         searchInputEl.value = "";
     }
     else {
-        //catch errors
         return;
     }
+}
 
-}
-//button press to clear
-var clearHistory = () => {
-    localStorage.removeItem("history");
-    searchHistory = [];
-    displayHistory();
-}
-// get uv and check errors
+// display alert next to the UV index data and color code it.
 var uvCheck = () => {
     if (currentWeather.uv === "error") {
         return;
@@ -271,12 +253,20 @@ var uvCheck = () => {
     }
 }
 
-//clear forecast data & empty the forecast array
+//function for clear history button
+var clearHistory = () => {
+    localStorage.removeItem("history");
+    searchHistory = [];
+    displayHistory();
+}
+
+//clears the forecast data from page
 var clearForecast = () => {
     forecast = [];
     forecastEl.innerHTML = "";
 }
 
+//function for user to click on a city in history
 var historyClickHandler = (event) => {
     var histCity = event.target.textContent;
     if (histCity) {
@@ -284,20 +274,18 @@ var historyClickHandler = (event) => {
         getWeather(histCity);
     }
 }
-//clear data for results and header of card
-var clearData =  () => {
-    console.log("inside clearData");
+// funtion to clear date
+var clearData = () => {
     curStatsEl.style.display = "none";
     forecastContEl.style.display = "none";
     curDateEl.innerHTML = "";
     curIconEl.innerHTML = "";
+    console.log(clearData)
 }
 
 
 loadHistory();
-//console.log(loadHistory);
 
-//event listener 
 formEl.addEventListener("submit", formSubmitHandler);
 clearBtnEl.addEventListener("click", clearHistory);
 historyEl.addEventListener("click", historyClickHandler);
